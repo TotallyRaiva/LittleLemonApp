@@ -9,17 +9,17 @@ import SwiftUI
 struct LocationsView: View {
     var body: some View {
         VStack {
-            LittleLemonLogo() // ✅ Logo at the top
+            LittleLemonLogo()
                 .padding(.top, 50)
 
-            // Placeholder for "Select a location"
-            EmptyView()
+            Text("Select a location")
+                .font(.headline)
+                .frame(maxWidth: .infinity)
                 .padding([.leading, .trailing], 40)
                 .padding([.top, .bottom], 8)
                 .background(Color.gray.opacity(0.2))
                 .cornerRadius(20)
 
-            // Placeholder for locations list
             NavigationView {
                 EmptyView()
                     .navigationBarTitle("")
