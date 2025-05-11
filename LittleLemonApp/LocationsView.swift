@@ -7,6 +7,11 @@
 import SwiftUI
 
 struct LocationsView: View {
+    
+    let locations = [
+        "Chicago", "Los Angeles", "New York", "Miami", "Dallas"
+    ]
+    
     var body: some View {
         VStack {
             LittleLemonLogo()
@@ -21,9 +26,14 @@ struct LocationsView: View {
                 .cornerRadius(20)
 
             NavigationView {
-                EmptyView()
-                    .navigationBarTitle("")
-                    .navigationBarHidden(true)
+                List(locations, id: \.self) { location in
+                    NavigationLink(destination: Text("Details for \(location)")) {
+                        Text(location)
+                            .padding(.vertical, 8)
+                    }
+                }
+                .navigationBarTitle("")
+                .navigationBarHidden(true)
             }
         }
         .padding()

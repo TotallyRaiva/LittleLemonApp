@@ -8,17 +8,28 @@
 import SwiftUI
 
 struct MainView: View {
+    @EnvironmentObject var model: Model
+
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        TabView(selection: $model.tabViewSelectedIndex) {
+            LocationsView()
+                .tag(0)
+                .tabItem {
+                    if !model.displayingReservationForm {
+                        Label("Locations", systemImage: "fork.knife")
+                    }
+                }
+
+            ReservationView()
+                .tag(1)
+                .tabItem {
+                    Label("Reservation", systemImage: "calendar")
+                }
         }
-        .padding()
     }
 }
 
 #Preview {
     MainView()
+        .environmentObject(Model())
 }

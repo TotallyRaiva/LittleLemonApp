@@ -9,9 +9,12 @@ import SwiftUI
 
 @main
 struct LittleLemonAppApp: App {
+    @StateObject private var model = Model()
+
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(model)
         }
     }
 }
