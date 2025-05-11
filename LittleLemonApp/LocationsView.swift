@@ -27,7 +27,7 @@ struct LocationsView: View {
 
             NavigationView {
                 List(locations, id: \.self) { location in
-                    NavigationLink(destination: Text("Details for \(location)")) {
+                    NavigationLink(destination: ReservationFormView(location: location)) {
                         Text(location)
                             .padding(.vertical, 8)
                     }
