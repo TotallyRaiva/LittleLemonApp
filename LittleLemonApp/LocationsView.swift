@@ -24,9 +24,15 @@ struct LocationsView: View {
 
             NavigationView {
                 List(model.restaurants) { restaurant in
-                    NavigationLink(destination: ReservationFormView(location: restaurant.city)) {
-                        RestaurantView(restaurant: restaurant)
-                    }
+                    NavigationLink(
+                        destination: ReservationFormView(location: restaurant.city),
+                        label: {
+                            RestaurantView(restaurant: restaurant)
+                        }
+                    )
+                    .simultaneousGesture(TapGesture().onEnded {
+                        model.displayingReservationForm = true
+                    })
                 }
                 .navigationBarTitle("")
                 .navigationBarHidden(true)
