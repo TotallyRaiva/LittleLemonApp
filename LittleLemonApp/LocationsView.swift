@@ -7,6 +7,7 @@
 import SwiftUI
 
 struct LocationsView: View {
+    @EnvironmentObject var model: Model
     
     let locations = [
         "Chicago", "Los Angeles", "New York", "Miami", "Dallas"
@@ -17,7 +18,7 @@ struct LocationsView: View {
             LittleLemonLogo()
                 .padding(.top, 50)
 
-            Text("Select a location")
+            Text(model.displayingReservationForm ? "Reservation Details" : "Select a location")
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding([.leading, .trailing], 40)
