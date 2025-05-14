@@ -8,11 +8,7 @@ import SwiftUI
 
 struct LocationsView: View {
     @EnvironmentObject var model: Model
-    
-    let locations = [
-        "Chicago", "Los Angeles", "New York", "Miami", "Dallas"
-    ]
-    
+
     var body: some View {
         VStack {
             LittleLemonLogo()
@@ -27,10 +23,9 @@ struct LocationsView: View {
                 .cornerRadius(20)
 
             NavigationView {
-                List(locations, id: \.self) { location in
-                    NavigationLink(destination: ReservationFormView(location: location)) {
-                        Text(location)
-                            .padding(.vertical, 8)
+                List(model.restaurants) { restaurant in
+                    NavigationLink(destination: ReservationFormView(location: restaurant.city)) {
+                        RestaurantView(restaurant: restaurant)
                     }
                 }
                 .navigationBarTitle("")
