@@ -6,7 +6,9 @@
 //
 import SwiftUI
 
+
 struct ReservationFormView: View {
+    @State private var party: Int = 1
     let location: String
 
     var body: some View {
@@ -17,6 +19,21 @@ struct ReservationFormView: View {
             Text(location)
                 .font(.largeTitle)
                 .bold()
+            // Party Size Field
+            HStack {
+                    Text("Party")
+                        .font(.subheadline)
+                    Spacer()
+                    TextField("", value: $party, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .frame(width: 50)
+                        .multilineTextAlignment(.center)
+                        .onChange(of: party) {
+                            if party <= 0 {
+                                party = 1
+                            }
+                        }
+                }
 
             Spacer()
         }
