@@ -9,6 +9,10 @@ import SwiftUI
 
 struct ReservationFormView: View {
     @State private var party: Int = 1
+    @State private var reservationDate = Date()
+    
+    
+    
     let location: String
 
     var body: some View {
@@ -34,6 +38,14 @@ struct ReservationFormView: View {
                             }
                         }
                 }
+
+            // DatePicker Field
+            DatePicker(
+                "Select Date & Time",
+                selection: $reservationDate,
+                displayedComponents: [.date, .hourAndMinute]
+            )
+            .datePickerStyle(.compact)
 
             Spacer()
         }
