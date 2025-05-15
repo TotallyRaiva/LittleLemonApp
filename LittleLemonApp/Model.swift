@@ -13,10 +13,21 @@ struct Restaurant: Identifiable {
     let phoneNumber: String
 }
 
+struct Reservation {
+    let location: String
+    let party: Int
+    let date: Date
+    let name: String
+    let phone: String
+    let email: String
+    let specialRequest: String
+}
+
 class Model: ObservableObject {
     @Published var tabViewSelectedIndex: Int = 0
     @Published var displayingReservationForm: Bool = false
-
+    @Published var confirmedReservation: Reservation?
+    
     let restaurants = [
         Restaurant(city: "Las Vegas", neighborhood: "Downtown", phoneNumber: "(702) 555-9898"),
         Restaurant(city: "Los Angeles", neighborhood: "North Hollywood", phoneNumber: "(213) 555-1453"),

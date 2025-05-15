@@ -18,6 +18,8 @@ struct ReservationFormView: View {
     @State private var showFormInvalidMessage = false
     @State private var errorMessage = ""
     
+    @EnvironmentObject var model: Model
+    
     let location: String
 
     var body: some View {
@@ -147,8 +149,17 @@ struct ReservationFormView: View {
         }
 
         if errors.isEmpty {
-            print("Form is valid. Proceeding with reservation...")
-            // Future: Save reservation data and navigate back.
+            model.confirmedReservation = Reservation(
+                location: location,
+                party: party,
+                date: reservationDate,
+                name: name,
+                phone: phone,
+                email: email,
+                specialRequest: specialRequest
+            )
+            model.displayingReservationForm = false
+            model.tabViewSelectedIndex = 1
         } else {
             errorMessage = errors.joined(separator: "\n")
             showFormInvalidMessage = true
