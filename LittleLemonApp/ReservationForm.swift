@@ -21,93 +21,108 @@ struct ReservationFormView: View {
     let location: String
 
     var body: some View {
-        VStack(spacing: 20) {
-            Text("Reservation at:")
-                .font(.headline)
-
-            Text(location)
-                .font(.largeTitle)
-                .bold()
-            // Party Size Field
-            HStack {
-                Text("Party")
-                    .font(.subheadline)
-                Spacer()
-                Button(action: {
-                    if party > 1 {
-                        party -= 1
-                    }
-                }) {
-                    Image(systemName: "minus.circle.fill")
-                        .font(.title2)
-                }
-                Text("\(party)")
-                    .frame(width: 40)
-                    .multilineTextAlignment(.center)
-                Button(action: {
-                    party += 1
-                }) {
-                    Image(systemName: "plus.circle.fill")
-                        .font(.title2)
-                }
-            }
-
-            // DatePicker Field
-            DatePicker(
-                "Select Date & Time",
-                selection: $reservationDate,
-                displayedComponents: [.date, .hourAndMinute]
-            )
-            .datePickerStyle(.compact)
-            
-            // Name Field
-            TextField("Name", text: $name)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            // Phone Field
-            TextField("Phone", text: $phone)
-                .keyboardType(.phonePad)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            // Email Field
-            TextField("Email", text: $email)
-                .keyboardType(.emailAddress)
-                .textFieldStyle(RoundedBorderTextFieldStyle())
-            
-            // Special Request Field (Multiline)
-            TextEditor(text: $specialRequest)
-                .frame(height: 100)
-                .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5)))
-                .padding(.top, 10)
-                .background(Color.gray.opacity(0.1))
-                .cornerRadius(8)
-                .overlay(
-                    Group {
-                        if specialRequest.isEmpty {
-                            Text("Add any special request (optional)")
-                                .foregroundColor(.gray)
-                                .padding(.top, 12)
-                                .padding(.leading, 5)
+        ScrollView {
+            VStack(spacing: 8) {
+                Text("Reserve Table - \(location)")
+                    .font(.title)
+                    .bold()
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                // Party Size Field
+                HStack {
+                    Text("Party")
+                        .font(.subheadline)
+                    Spacer()
+                    Button(action: {
+                        if party > 1 {
+                            party -= 1
                         }
-                    },
-                    alignment: .topLeading
-                )
-            
-            Button(action: {
-                validateForm()
-            }) {
-                Text("CONFIRM RESERVATION")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
-                    .padding()
-                    .background(Color.blue)
-                    .foregroundColor(.white)
-                    .cornerRadius(10)
-            }
+                    }) {
+                        Image(systemName: "minus.circle.fill")
+                            .font(.title2)
+                            .padding(.horizontal, 4)
+                    }
+                    Text("\(party)")
+                        .frame(width: 40)
+                        .multilineTextAlignment(.center)
+                    Button(action: {
+                        party += 1
+                    }) {
+                        Image(systemName: "plus.circle.fill")
+                            .font(.title2)
+                            .padding(.horizontal, 4)
+                    }
+                }
 
-            Spacer()
+                // DatePicker Field
+                DatePicker(
+                    "",
+                    selection: $reservationDate,
+                    displayedComponents: [.date, .hourAndMinute]
+                )
+                .labelsHidden()
+                .datePickerStyle(.compact)
+            
+                // Name Field
+                TextField("Name", text: $name)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                
+                // Phone Field
+                TextField("Phone", text: $phone)
+                    .keyboardType(.phonePad)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+                
+                // Email Field
+                TextField("Email", text: $email)
+                    .keyboardType(.emailAddress)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .cornerRadius(8)
+                    .padding(.horizontal)
+            
+                // Special Request Field (Multiline)
+                TextEditor(text: $specialRequest)
+                    .frame(height: 100)
+                    .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.gray.opacity(0.5)))
+                    .padding(.top, 6)
+                    .padding(.horizontal)
+                    .overlay(
+                        Group {
+                            if specialRequest.isEmpty {
+                                Text("Add any special request (optional)")
+                                    .foregroundColor(.gray)
+                                    .padding(.leading, 16)
+                                    .padding(.top, 14)
+                            }
+                        },
+                        alignment: .topLeading
+                    )
+                
+                Button(action: {
+                    validateForm()
+                }) {
+                    Text("CONFIRM RESERVATION")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity)
+                        .padding()
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .cornerRadius(10)
+                }
+                .padding(.bottom, 60)
+
+                Spacer()
+            }
+            .frame(maxHeight: .infinity, alignment: .top)
         }
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         .padding()
+        .safeAreaInset(edge: .bottom, spacing: 0) {
+            Color.clear.frame(height: 20)
+        }
         .alert("Form Invalid", isPresented: $showFormInvalidMessage) {
             Button("OK", role: .cancel) { }
         } message: {
